@@ -1,0 +1,35 @@
+pull_request_rules:
+  - name: Automatic give label need-review
+    conditions:
+      - "-closed"
+      - "#approved-reviews-by=0"
+    actions:
+      label:
+        add:
+          - 1-need-review
+      request_reviews:
+        users:
+          - kvnrynfl
+          - robertarsyah
+          - irfnrzqy
+
+  - name: Automatic give label ready-to-merge
+    conditions:
+      - "-closed"
+      - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
+      - check-success=Codacy Static Code Analysis
+    actions:
+      label:
+        add:
+          - 2-already-reviewed
+          - 3-ready-to-merge
+
+  - name: Automatic label "merged" after merge
+    conditions:
+      - merged
+    actions:
+      label:
+        add:
+          - 4-merged
+      close:
